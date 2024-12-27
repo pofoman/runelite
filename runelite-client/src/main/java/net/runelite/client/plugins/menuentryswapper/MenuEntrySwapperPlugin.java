@@ -197,6 +197,9 @@ public class MenuEntrySwapperPlugin extends Plugin
 		swap("talk-to", "help", config::swapHelp);
 		// make sure assignment swap is higher priority than trade swap for slayer masters
 		swap("talk-to", "assignment", config::swapAssignment);
+		// make sure pay swaps are higher priority than trade swap for farmers
+		swap("talk-to", "pay", config::swapPay);
+		swapContains("talk-to", alwaysTrue(), "pay (", config::swapPay);
 		swap("talk-to", "trade", config::swapTrade);
 		swap("talk-to", "trade-with", config::swapTrade);
 		swap("talk-to", "shop", config::swapTrade);
@@ -215,8 +218,6 @@ public class MenuEntrySwapperPlugin extends Plugin
 		swap("talk-to", "miscellania", config::swapTravel);
 		swap("talk-to", "follow", config::swapTravel);
 		swap("talk-to", "transport", config::swapTravel);
-		swap("talk-to", "pay", config::swapPay);
-		swapContains("talk-to", alwaysTrue(), "pay (", config::swapPay);
 		swap("talk-to", "quick-travel", config::swapQuick);
 		swap("talk-to", ESSENCE_MINE_NPCS::contains, "teleport", config::swapEssenceMineTeleport);
 		swap("talk-to", "deposit-items", config::swapDepositItems);
@@ -508,11 +509,11 @@ public class MenuEntrySwapperPlugin extends Plugin
 					(shiftSwapConfig == -1 ? MenuAction.WALK : OBJECT_MENU_TYPES.get(shiftSwapConfig));
 
 				MenuEntry swapLeftClick = client.createMenuEntry(idx)
-					.setOption("Swap left click")
+					.setOption("Swap left-click")
 					.setTarget(entry.getTarget())
 					.setType(MenuAction.RUNELITE);
 				MenuEntry swapShiftClick = client.createMenuEntry(idx)
-					.setOption("Swap shift click")
+					.setOption("Swap shift-click")
 					.setTarget(entry.getTarget())
 					.setType(MenuAction.RUNELITE);
 				Menu subLeft = swapLeftClick.createSubMenu();
@@ -697,11 +698,11 @@ public class MenuEntrySwapperPlugin extends Plugin
 					(shiftSwapConfig == -1 ? MenuAction.WALK : NPC_MENU_TYPES.get(shiftSwapConfig));
 
 				MenuEntry swapLeftClick = client.createMenuEntry(idx)
-					.setOption("Swap left click")
+					.setOption("Swap left-click")
 					.setTarget(entry.getTarget())
 					.setType(MenuAction.RUNELITE);
 				MenuEntry swapShiftClick = client.createMenuEntry(idx)
-					.setOption("Swap shift click")
+					.setOption("Swap shift-click")
 					.setTarget(entry.getTarget())
 					.setType(MenuAction.RUNELITE);
 				Menu subLeft = swapLeftClick.createSubMenu();
@@ -836,11 +837,11 @@ public class MenuEntrySwapperPlugin extends Plugin
 					final Integer shiftClickOp = getWornItemSwapConfig(true, itemComposition.getId());
 
 					MenuEntry swapLeftClick = client.createMenuEntry(idx)
-						.setOption("Swap left click")
+						.setOption("Swap left-click")
 						.setTarget(entry.getTarget())
 						.setType(MenuAction.RUNELITE);
 					MenuEntry swapShiftClick = client.createMenuEntry(idx)
-						.setOption("Swap shift click")
+						.setOption("Swap shift-click")
 						.setTarget(entry.getTarget())
 						.setType(MenuAction.RUNELITE);
 					Menu subLeft = swapLeftClick.createSubMenu();
@@ -904,7 +905,7 @@ public class MenuEntrySwapperPlugin extends Plugin
 							.onClick(e ->
 							{
 								final String message = new ChatMessageBuilder()
-									.append("The default worn left click option for '").append(itemComposition.getMembersName()).append("' ")
+									.append("The default worn left-click option for '").append(itemComposition.getMembersName()).append("' ")
 									.append("has been reset.")
 									.build();
 
@@ -925,7 +926,7 @@ public class MenuEntrySwapperPlugin extends Plugin
 							.onClick(e ->
 							{
 								final String message = new ChatMessageBuilder()
-									.append("The default worn shift click option for '").append(itemComposition.getMembersName()).append("' ")
+									.append("The default worn shift-click option for '").append(itemComposition.getMembersName()).append("' ")
 									.append("has been reset.")
 									.build();
 
@@ -987,11 +988,11 @@ public class MenuEntrySwapperPlugin extends Plugin
 				final int defaultShiftClickOp = defaultOp(itemComposition, true);
 
 				MenuEntry swapLeftClick = client.createMenuEntry(idx)
-					.setOption("Swap left click")
+					.setOption("Swap left-click")
 					.setTarget(entry.getTarget())
 					.setType(MenuAction.RUNELITE);
 				MenuEntry swapShiftClick = client.createMenuEntry(idx)
-					.setOption("Swap shift click")
+					.setOption("Swap shift-click")
 					.setTarget(entry.getTarget())
 					.setType(MenuAction.RUNELITE);
 				Menu subLeft = swapLeftClick.createSubMenu();
@@ -1080,7 +1081,7 @@ public class MenuEntrySwapperPlugin extends Plugin
 						.onClick(e ->
 						{
 							final String message = new ChatMessageBuilder()
-								.append("The default held left click option for '").append(itemComposition.getMembersName()).append("' ")
+								.append("The default held left-click option for '").append(itemComposition.getMembersName()).append("' ")
 								.append("has been reset.")
 								.build();
 
@@ -1101,7 +1102,7 @@ public class MenuEntrySwapperPlugin extends Plugin
 						.onClick(e ->
 						{
 							final String message = new ChatMessageBuilder()
-								.append("The default held shift click option for '").append(itemComposition.getMembersName()).append("' ")
+								.append("The default held shift-click option for '").append(itemComposition.getMembersName()).append("' ")
 								.append("has been reset.")
 								.build();
 
@@ -1204,10 +1205,10 @@ public class MenuEntrySwapperPlugin extends Plugin
 					{
 						initialized = true;
 						swapLeftClick = client.createMenuEntry(2)
-							.setOption("Swap left click")
+							.setOption("Swap left-click")
 							.setType(MenuAction.RUNELITE);
 						swapShiftClick = client.createMenuEntry(2)
-							.setOption("Swap shift click")
+							.setOption("Swap shift-click")
 							.setType(MenuAction.RUNELITE);
 						subLeft = swapLeftClick.createSubMenu();
 						subShift = swapShiftClick.createSubMenu();
@@ -1239,7 +1240,7 @@ public class MenuEntrySwapperPlugin extends Plugin
 								.onClick(menuEntry ->
 								{
 									final String message = new ChatMessageBuilder()
-										.append("The default left click option for '").append(Text.removeTags(entry.getTarget())).append("' ")
+										.append("The default left-click option for '").append(Text.removeTags(entry.getTarget())).append("' ")
 										.append("has been reset.")
 										.build();
 
@@ -1262,7 +1263,7 @@ public class MenuEntrySwapperPlugin extends Plugin
 								.onClick(menuEntry ->
 								{
 									final String message = new ChatMessageBuilder()
-										.append("The default shift click option for '").append(Text.removeTags(entry.getTarget())).append("' ")
+										.append("The default shift-click option for '").append(Text.removeTags(entry.getTarget())).append("' ")
 										.append("has been reset.")
 										.build();
 
@@ -1971,9 +1972,10 @@ public class MenuEntrySwapperPlugin extends Plugin
 			.addSub("Pollnivneach", () -> pauseresume(ComponentID.ADVENTURE_LOG_OPTIONS, 3))
 			.addSub("Hosidius", () -> pauseresume(ComponentID.ADVENTURE_LOG_OPTIONS, 4))
 			.addSub("Rellekka", () -> pauseresume(ComponentID.ADVENTURE_LOG_OPTIONS, 5))
-			.addSub("Brimhaven", () -> pauseresume(ComponentID.ADVENTURE_LOG_OPTIONS, 6))
-			.addSub("Yanille", () -> pauseresume(ComponentID.ADVENTURE_LOG_OPTIONS, 7))
-			.addSub("Prifddinas", () -> pauseresume(ComponentID.ADVENTURE_LOG_OPTIONS, 8));
+			.addSub("Aldarin", () -> pauseresume(ComponentID.ADVENTURE_LOG_OPTIONS, 6))
+			.addSub("Brimhaven", () -> pauseresume(ComponentID.ADVENTURE_LOG_OPTIONS, 7))
+			.addSub("Yanille", () -> pauseresume(ComponentID.ADVENTURE_LOG_OPTIONS, 8))
+			.addSub("Prifddinas", () -> pauseresume(ComponentID.ADVENTURE_LOG_OPTIONS, 9));
 		teleportSwap("Other Teleports", ItemID.MAX_CAPE_13342)
 			.worn()
 			.addSub("Feldip hills", () ->
@@ -2047,20 +2049,25 @@ public class MenuEntrySwapperPlugin extends Plugin
 				pauseresume(ComponentID.ADVENTURE_LOG_OPTIONS, 6); // POH Portals
 				pauseresume(ComponentID.ADVENTURE_LOG_OPTIONS, 5);
 			})
-			.addSub("Brimhaven", () ->
+			.addSub("Aldarin", () ->
 			{
 				pauseresume(ComponentID.ADVENTURE_LOG_OPTIONS, 6); // POH Portals
 				pauseresume(ComponentID.ADVENTURE_LOG_OPTIONS, 6);
 			})
-			.addSub("Yanille", () ->
+			.addSub("Brimhaven", () ->
 			{
 				pauseresume(ComponentID.ADVENTURE_LOG_OPTIONS, 6); // POH Portals
 				pauseresume(ComponentID.ADVENTURE_LOG_OPTIONS, 7);
 			})
-			.addSub("Prifddinas", () ->
+			.addSub("Yanille", () ->
 			{
 				pauseresume(ComponentID.ADVENTURE_LOG_OPTIONS, 6); // POH Portals
 				pauseresume(ComponentID.ADVENTURE_LOG_OPTIONS, 8);
+			})
+			.addSub("Prifddinas", () ->
+			{
+				pauseresume(ComponentID.ADVENTURE_LOG_OPTIONS, 6); // POH Portals
+				pauseresume(ComponentID.ADVENTURE_LOG_OPTIONS, 9);
 			});
 		// endregion
 
@@ -2074,9 +2081,10 @@ public class MenuEntrySwapperPlugin extends Plugin
 			.addSub("Pollnivneach", () -> pauseresume(ComponentID.ADVENTURE_LOG_OPTIONS, 3))
 			.addSub("Hosidius", () -> pauseresume(ComponentID.ADVENTURE_LOG_OPTIONS, 4))
 			.addSub("Rellekka", () -> pauseresume(ComponentID.ADVENTURE_LOG_OPTIONS, 5))
-			.addSub("Brimhaven", () -> pauseresume(ComponentID.ADVENTURE_LOG_OPTIONS, 6))
-			.addSub("Yanille", () -> pauseresume(ComponentID.ADVENTURE_LOG_OPTIONS, 7))
-			.addSub("Prifddinas", () -> pauseresume(ComponentID.ADVENTURE_LOG_OPTIONS, 8));
+			.addSub("Aldarin", () -> pauseresume(ComponentID.ADVENTURE_LOG_OPTIONS, 6))
+			.addSub("Brimhaven", () -> pauseresume(ComponentID.ADVENTURE_LOG_OPTIONS, 7))
+			.addSub("Yanille", () -> pauseresume(ComponentID.ADVENTURE_LOG_OPTIONS, 8))
+			.addSub("Prifddinas", () -> pauseresume(ComponentID.ADVENTURE_LOG_OPTIONS, 9));
 		// endregion
 
 		// region Achievement diary cape

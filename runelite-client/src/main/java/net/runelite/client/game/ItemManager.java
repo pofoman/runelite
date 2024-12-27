@@ -58,7 +58,6 @@ import net.runelite.client.callback.ClientThread;
 import net.runelite.client.config.RuneLiteConfig;
 import net.runelite.client.util.AsyncBufferedImage;
 import net.runelite.http.api.item.ItemPrice;
-import net.runelite.http.api.item.ItemStats;
 
 @Singleton
 @Slf4j
@@ -171,6 +170,12 @@ public class ItemManager
 		put(GRACEFUL_LEGS_27455, GRACEFUL_LEGS_27453).
 		put(GRACEFUL_GLOVES_27458, GRACEFUL_GLOVES_27456).
 		put(GRACEFUL_BOOTS_27461, GRACEFUL_BOOTS_27459).
+		put(GRACEFUL_HOOD_30047, GRACEFUL_HOOD_30045).
+		put(GRACEFUL_CAPE_30050, GRACEFUL_CAPE_30048).
+		put(GRACEFUL_TOP_30053, GRACEFUL_TOP_30051).
+		put(GRACEFUL_LEGS_30056, GRACEFUL_LEGS_30054).
+		put(GRACEFUL_GLOVES_30059, GRACEFUL_GLOVES_30057).
+		put(GRACEFUL_BOOTS_30062, GRACEFUL_BOOTS_30060).
 
 		put(MAX_CAPE_13342, MAX_CAPE).
 
@@ -345,16 +350,38 @@ public class ItemManager
 	 * @return item stats
 	 */
 	@Nullable
-	public ItemStats getItemStats(int itemId, boolean allowNote)
+	public ItemStats getItemStats(int itemId)
 	{
 		ItemComposition itemComposition = getItemComposition(itemId);
 
-		if (itemComposition == null || itemComposition.getName() == null || (!allowNote && itemComposition.getNote() != -1))
+		if (itemComposition.getName() == null || itemComposition.getNote() != -1)
 		{
 			return null;
 		}
 
 		return itemStats.get(canonicalize(itemId));
+	}
+
+	/**
+	 * Look up an item's stats
+	 *
+	 * @param itemId item id
+	 * @return item stats
+	 * @deprecated See {@link #getItemStats(int)}
+	 */
+	@Nullable
+	@Deprecated
+	public net.runelite.http.api.item.ItemStats getItemStats(int itemId, boolean allowNote)
+	{
+		ItemComposition itemComposition = getItemComposition(itemId);
+
+		if (itemComposition.getName() == null || (!allowNote && itemComposition.getNote() != -1))
+		{
+			return null;
+		}
+
+		var stats = itemStats.get(canonicalize(itemId));
+		return stats != null ? stats.toHttpApiFormat() : null;
 	}
 
 	/**

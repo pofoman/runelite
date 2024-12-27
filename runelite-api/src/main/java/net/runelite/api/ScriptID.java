@@ -288,7 +288,7 @@ public final class ScriptID
 	 * Called to build the combat interface
 	 */
 	@ScriptArguments()
-	public static final int COMBAT_INTERFACE_SETUP = 420;
+	public static final int COMBAT_INTERFACE_SETUP = 7593;
 
 	/**
 	 * Called to build the toplevel interface
@@ -461,4 +461,19 @@ public final class ScriptID
 
 	@ScriptArguments(integer = 2)
 	public static final int MOTHERLODE_HUD_UPDATE = 1634;
+
+	@ScriptArguments(integer = 1)
+	public static final int POTIONSTORE_DOSES = 3750;
+
+	@ScriptArguments(integer = 1)
+	public static final int POTIONSTORE_WITHDRAW_DOSES = 4818;
+
+	@ScriptArguments()
+	public static final int POTIONSTORE_BUILD = 6080;
+
+	@ScriptArguments(integer = 3)
+	public static final int POTIONSTORE_DOSE_CHANGE = 6555;
+
+	@ScriptArguments(integer = 5)
+	public static final int FAIRYRINGS_SORT_UPDATE = 402;
 }
