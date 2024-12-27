@@ -402,6 +402,14 @@
 					<keypass>${jarsigner.keypass}</keypass>
 				</configuration>
 			</plugin>
+      <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <version>3.4.1</version>
+            <configuration>
+                <mainClass>net.runelite.client.RuneLite</mainClass>
+            </configuration>
+      </plugin>
 			<plugin>
 				<groupId>net.runelite</groupId>
 				<artifactId>runelite-maven-plugin</artifactId>

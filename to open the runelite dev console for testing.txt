@@ -1,0 +1,1 @@
+mvn -DskipTests clean package -pl runelite-client exec:java -Dexec.mainClass=net.runelite.client.RuneLite
